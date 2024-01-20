@@ -32,7 +32,7 @@
                         <TextBlock Text="{Binding Stamp}" FontSize="16"/>
                         <TextBlock Text="{Binding Model}" FontSize="16"/>
                         <TextBlock Text="{Binding StateNumber}" FontSize="16"/>
-                        <TextBlock Text="{Binding EngineType.Name}" FontSize="16"/>
+                        <TextBlock Text="{Binding EngineTypes.Name}" FontSize="16"/>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Content="Изменить" Margin="10" Padding="3" 
                                     Name="EditButton" Click="EditButton_Click"/>

@@ -45,7 +45,7 @@
         <TextBox Name="StateNumberBox" Text="{Binding StateNumber}" Grid.Column="1" Grid.Row="2"/>
         <ComboBox Name="CBoxEngineType" Grid.Column="1" Grid.Row="3" 
                   DisplayMemberPath="Name" SelectedValuePath="Id" 
-                  SelectedItem="{Binding EngineType}"/>
+                  SelectedItem="{Binding EngineTypes}"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                     Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
             <Button  Name="Confirm"

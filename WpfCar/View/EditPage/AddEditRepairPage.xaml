@@ -27,7 +27,10 @@
             <Setter Property="MinWidth" Value="60"/>
             <Setter Property="Margin" Value="8"/>
         </Style>
-        
+        <Style TargetType="DatePicker">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -42,21 +45,23 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
-        <TextBlock Text="Дата" />
+        <TextBlock Text="Дата (dd.mm.yyyy)" />
         <TextBlock Text="Автомобиль" Grid.Row="1"/>
         <TextBlock Text="Вид работы" Grid.Row="2"/>
-        <TextBox Name="TBoxDate"  Text="{Binding Date}" Grid.Column="1"/>
-
+        
+        <TextBox Name="TBoxDate"  Grid.Column="1" TextChanged="TBoxDate_TextChanged" 
+                 Text="{Binding Date, StringFormat = {}{0:dd.MM.yyyy}}"></TextBox>
+       
         <ComboBox Name="CBoxStateNumber" DisplayMemberPath="StateNumber" SelectedValuePath="Id"  
-                 SelectedItem="{Binding Car}" Grid.Row="1" Grid.Column="1" 
+                 SelectedItem="{Binding Cars}" Grid.Row="1" Grid.Column="1" 
                   SelectionChanged="CBoxEngineType_SelectionChanged"/>
         
-        <ComboBox Name="CBoxEngineType" DisplayMemberPath="EngineType.Name" Visibility="Visible"  
-                   SelectedValuePath="EngineType.Id" 
-                   SelectedItem="{Binding Car}" SelectionChanged="CBoxEngineType_SelectionChanged"/>
+        <ComboBox Name="CBoxEngineType" DisplayMemberPath="EngineTypes.Name" Visibility="Visible"  
+                   SelectedValuePath="EngineTypes.Id" 
+                   SelectedItem="{Binding Cars}" SelectionChanged="CBoxEngineType_SelectionChanged"/>
         
         <ComboBox Name="CBoxNameWork" DisplayMemberPath="NameWork" SelectedValuePath="Id"
-                   SelectedItem="{Binding ConductWork}" Grid.Column="1" Grid.Row="2"/>
+                   SelectedItem="{Binding ConductWorks}" Grid.Column="1" Grid.Row="2"/>
         
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                     Orientation="Horizontal" Grid.Row="3" Grid.Column="1">

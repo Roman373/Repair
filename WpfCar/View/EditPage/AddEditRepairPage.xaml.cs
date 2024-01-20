@@ -46,10 +46,10 @@ namespace WpfCar.View.EditPage
                 int IdEngineType = int.Parse(CBoxEngineType.SelectedValue.ToString());
                 
                 if (IdEngineType == 1)
-                    conductWork = conductWork.Where(p => p.EngineType.Id == 1).ToList();
+                    conductWork = conductWork.Where(p => p.EngineTypes.Id == 1).ToList();
 
                 if (IdEngineType == 2)
-                    conductWork = conductWork.Where(p => p.EngineType.Id == 2).ToList();
+                    conductWork = conductWork.Where(p => p.EngineTypes.Id == 2).ToList();
             }
             CBoxNameWork.ItemsSource = conductWork;
         }
@@ -71,11 +71,11 @@ namespace WpfCar.View.EditPage
                 
                 var repair = new Repairs
                 {
-                    Date =TBoxDate.Text,
-                    ConductWork = CBoxNameWork.SelectedItem as ConductWorks,
+                    Date = TBoxDate.Text,
+                    ConductWorks = CBoxNameWork.SelectedItem as ConductWorks,
 
                     ConductWork_Id = int.Parse(CBoxNameWork.SelectedValue.ToString()),
-                    Car = CBoxStateNumber.SelectedItem as Cars,
+                    Cars = CBoxStateNumber.SelectedItem as Cars,
                     Car_Id = int.Parse(CBoxStateNumber.SelectedValue.ToString()),
                 };
 
@@ -90,6 +90,26 @@ namespace WpfCar.View.EditPage
                 App.Context.SaveChanges();
             }
             NavigationService.GoBack();
+        }
+
+       
+
+        private void TBoxDate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                var text = textBox.Text.Replace(".", "");
+                if (text.Length >= 2 && text.Length < 4)
+                {
+                    textBox.Text = text.Insert(2, ".");
+                    textBox.Select(textBox.Text.Length, 0);
+                }
+                else if (text.Length >= 4)
+                {
+                    textBox.Text = text.Insert(2, ".").Insert(5, ".");
+                    textBox.Select(textBox.Text.Length, 0);
+                }
+            }
         }
     }
 }

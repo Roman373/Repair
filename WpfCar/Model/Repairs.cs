@@ -13,10 +13,10 @@ namespace WpfCar.Model
         public string Date { get; set; }
 
         public int Car_Id;
-        public virtual Cars Car { get; set; }
+        public virtual Cars Cars { get; set; }
         
         public int ConductWork_Id;
-        public virtual ConductWorks ConductWork { get; set; }
+        public virtual ConductWorks ConductWorks { get; set; }
         
     }
 }

@@ -12,6 +12,6 @@ namespace WpfCar.Model
         public string NameWork { get; set; }
 
         public int EngineType_Id;
-        public virtual EngineTypes EngineType { get; set; }
+        public virtual EngineTypes EngineTypes { get; set; }
     }
 }

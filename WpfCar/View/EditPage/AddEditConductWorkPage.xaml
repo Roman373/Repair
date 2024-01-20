@@ -38,7 +38,7 @@
         <TextBlock Text="Тип двигателя" Grid.Row="1"/>
         <TextBox Name="TBoxNameWork"  Text="{Binding NameWork}" Grid.Column="1"/>
         <ComboBox Name="CBoxEngineType" DisplayMemberPath="Name" SelectedValuePath="Id"
-                   SelectedItem="{Binding EngineType}"  Grid.Column="1" Grid.Row="1"/>
+                   SelectedItem="{Binding EngineTypes}"  Grid.Column="1" Grid.Row="1"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                     Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
             <Button  Name="Confirm"

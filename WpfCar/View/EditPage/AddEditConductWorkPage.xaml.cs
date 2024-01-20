@@ -43,7 +43,7 @@ namespace WpfCar.View.EditPage
                 var conductWork = new ConductWorks
                 {
                     NameWork = TBoxNameWork.Text,
-                    EngineType = CBoxEngineType.SelectedItem as EngineTypes,
+                    EngineTypes = CBoxEngineType.SelectedItem as EngineTypes,
                     EngineType_Id = int.Parse(CBoxEngineType.SelectedValue.ToString()),
                 };
 
