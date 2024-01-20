@@ -1,0 +1,48 @@
+﻿<Page x:Class="WpfCar.View.ConductWorkPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfCar.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ConductWorkPage">
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Name="ConductWorksList" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding NameWork}" FontSize="16"/>
+                        <TextBlock Text="{Binding EngineType.Name}" FontSize="16"/>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Изменить" Margin="10" Padding="3" 
+                                    Name="EditButton" Click="EditButton_Click"/>
+                            <Button Content="Удалить" Margin="10" Padding="3" 
+                                    Name="DeleteButton" Click="DeleteButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Content="Добавить" Margin="10" Grid.Row="1" Padding="3" 
+                Name="AddButton" Click="AddButton_Click"/>
+    </Grid>
+</Page>
