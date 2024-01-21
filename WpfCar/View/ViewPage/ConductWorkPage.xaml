@@ -8,28 +8,25 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConductWorkPage">
 
-    <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
-        <ListBox Name="ConductWorksList" >
+        <ListBox Name="ConductWorksList">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+                    <WrapPanel HorizontalAlignment="Center" MaxWidth="550" VerticalAlignment="Center" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding NameWork}" FontSize="16"/>
+                    <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Vertical" MaxWidth="500" MaxHeight="150" >
+                            <TextBlock Text="{Binding NameWork}" TextWrapping="Wrap" FontSize="16"/>
+                        </StackPanel>
                         <TextBlock Text="{Binding EngineTypes.Name}" FontSize="16"/>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Content="Изменить" Margin="10" Padding="3" 

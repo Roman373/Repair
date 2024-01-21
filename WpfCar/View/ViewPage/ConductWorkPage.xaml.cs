@@ -55,16 +55,40 @@ namespace WpfCar.View
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            App.selectedConductWorks = (sender as Button).DataContext as Model.ConductWorks;
-            // если ни одного объекта не выделено, выходим
-            if (App.selectedConductWorks is null) return;
-            App.Context.ConductWorks.Remove(App.selectedConductWorks);
-            App.Context.SaveChanges();
-            UpdateConduct();
+            try
+            {
+                App.selectedConductWorks = (sender as Button).DataContext as Model.ConductWorks;
+                int countOrder = 0;
+                if (MessageBox.Show($"Вы уверены, что хотите удалить вид работы {App.selectedConductWorks.NameWork} " +
+                    $"тип двигателя {App.selectedConductWorks.EngineTypes.Name}"
+                        , "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    foreach (Model.Repairs repair in App.Context.Repairs.Cast<Model.Repairs>())
+                    {
+                        if (repair.ConductWork_Id == App.selectedConductWorks.Id)
+                        {
+                            countOrder++;
+                            MessageBox.Show($"Удалить нельзя вид работы {App.selectedConductWorks.NameWork} " +
+                                $"содержит заказ №{repair.Id}", "Внимание",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    if (countOrder == 0)
+                    {
+                        
+                        // если ни одного объекта не выделено, выходим
+                        if (App.selectedConductWorks is null) return;
+                        App.Context.ConductWorks.Remove(App.selectedConductWorks);
+                        App.Context.SaveChanges();
+                        UpdateConduct();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         
-        
-        
-
     }
 }

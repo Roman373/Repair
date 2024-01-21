@@ -30,7 +30,21 @@ namespace WpfCar.View.EditPage
             CBoxEngineType.ItemsSource = App.Context.EngineTypes.ToList();
            
         }
+        private string CheckError()
+        {
+            var errorBuilder = new StringBuilder();
 
+            if (string.IsNullOrWhiteSpace(TBoxNameWork.Text))
+                errorBuilder.AppendLine("Название обязательно для заполнения;");
+
+            if (CBoxEngineType.SelectedValue == null)
+                errorBuilder.AppendLine("Выберите тип двигателя");
+
+            if (errorBuilder.Length > 0)
+                errorBuilder.Insert(0, "Устраните следующие ошибки:\n");
+
+            return errorBuilder.ToString();
+        }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
@@ -38,27 +52,35 @@ namespace WpfCar.View.EditPage
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            if (App.selectedConductWorks == null)
+            var errorMessage = CheckError();
+            if (errorMessage.Length > 0)
             {
-                var conductWork = new ConductWorks
-                {
-                    NameWork = TBoxNameWork.Text,
-                    EngineTypes = CBoxEngineType.SelectedItem as EngineTypes,
-                    EngineType_Id = int.Parse(CBoxEngineType.SelectedValue.ToString()),
-                };
-
-                App.Context.ConductWorks.Add(conductWork);
-                App.Context.SaveChanges();
-
+                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                App.selectedConductWorks.NameWork = TBoxNameWork.Text;
-                App.selectedConductWorks.EngineType_Id = int.Parse(CBoxEngineType.SelectedValue.ToString());
+                if (App.selectedConductWorks == null)
+                {
+                    var conductWork = new ConductWorks
+                    {
+                        NameWork = TBoxNameWork.Text,
+                        EngineTypes = CBoxEngineType.SelectedItem as EngineTypes,
+                        EngineType_Id = int.Parse(CBoxEngineType.SelectedValue.ToString()),
+                    };
 
-                App.Context.SaveChanges();
+                    App.Context.ConductWorks.Add(conductWork);
+                    App.Context.SaveChanges();
+
+                }
+                else
+                {
+                    App.selectedConductWorks.NameWork = TBoxNameWork.Text;
+                    App.selectedConductWorks.EngineType_Id = int.Parse(CBoxEngineType.SelectedValue.ToString());
+
+                    App.Context.SaveChanges();
+                }
+                NavigationService.GoBack();
             }
-            NavigationService.GoBack();
         }
     }
 }

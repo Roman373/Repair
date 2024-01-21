@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,41 +25,52 @@ namespace WpfCar.View.EditPage
         public AddEditRepairPage()
         {
             InitializeComponent();
-            
+
             DataContext = App.selectedRepairs;
             CBoxStateNumber.ItemsSource = App.Context.Cars.ToList();
-            CBoxEngineType.ItemsSource = App.Context.Cars.ToList();
             UpdateComboBox();
+            
         }
-
-        private void CBoxEngineType_Loaded(object sender, RoutedEventArgs e)
+        
+        private string CheckError()
         {
-            UpdateComboBox();
-        }
+            var errorBuilder = new StringBuilder();
 
+            if (string.IsNullOrWhiteSpace(TBoxDate.Text))
+                errorBuilder.AppendLine("Дата обязательно для заполнения, формат даты dd.mm.yyyy;");
+
+            if (CBoxStateNumber.SelectedValue == null)
+                errorBuilder.AppendLine("Выберите автомобиль");
+
+            if (CBoxNameWork.SelectedValue == null)
+                errorBuilder.AppendLine("Выберите вид выполненых работ");
+            
+            if (errorBuilder.Length > 0)
+                errorBuilder.Insert(0, "Устраните следующие ошибки:\n");
+
+            return errorBuilder.ToString();
+        }
         public void  UpdateComboBox()
         {
             
-            var conductWork = App.Context.ConductWorks.ToList();
+            List<ConductWorks> conductWork = App.Context.ConductWorks.ToList();
+            App.selectedCars = CBoxStateNumber.SelectedItem as Cars;
             
-            if (CBoxEngineType.SelectedValue != null)
+            if (App.selectedCars != null)
             {
-                int IdEngineType = int.Parse(CBoxEngineType.SelectedValue.ToString());
-                
-                if (IdEngineType == 1)
+                if(App.selectedCars.EngineTypes.Id==1)
                     conductWork = conductWork.Where(p => p.EngineTypes.Id == 1).ToList();
-
-                if (IdEngineType == 2)
+                if (App.selectedCars.EngineTypes.Id == 2)
                     conductWork = conductWork.Where(p => p.EngineTypes.Id == 2).ToList();
             }
             CBoxNameWork.ItemsSource = conductWork;
         }
 
-        private void CBoxEngineType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CBoxStateNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateComboBox();
         }
-        
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
@@ -66,34 +78,41 @@ namespace WpfCar.View.EditPage
         
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            if (App.selectedRepairs == null)
+            var errorMessage = CheckError();
+            if (errorMessage.Length > 0)
             {
-                
-                var repair = new Repairs
-                {
-                    Date = TBoxDate.Text,
-                    ConductWorks = CBoxNameWork.SelectedItem as ConductWorks,
-
-                    ConductWork_Id = int.Parse(CBoxNameWork.SelectedValue.ToString()),
-                    Cars = CBoxStateNumber.SelectedItem as Cars,
-                    Car_Id = int.Parse(CBoxStateNumber.SelectedValue.ToString()),
-                };
-
-                App.Context.Repairs.Add(repair);
-                App.Context.SaveChanges();
+                MessageBox.Show(errorMessage, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                App.selectedRepairs.Date = TBoxDate.Text;
-                App.selectedRepairs.ConductWork_Id = int.Parse(CBoxNameWork.SelectedValue.ToString());
-                App.selectedRepairs.Car_Id = int.Parse(CBoxStateNumber.SelectedValue.ToString());
-                App.Context.SaveChanges();
+                if (App.selectedRepairs == null)
+                {
+
+                    var repair = new Repairs
+                    {
+                        Date = TBoxDate.Text,
+
+                        ConductWorks = CBoxNameWork.SelectedItem as ConductWorks,
+
+                        ConductWork_Id = int.Parse(CBoxNameWork.SelectedValue.ToString()),
+                        Cars = CBoxStateNumber.SelectedItem as Cars,
+                        Car_Id = int.Parse(CBoxStateNumber.SelectedValue.ToString()),
+                    };
+
+                    App.Context.Repairs.Add(repair);
+                    App.Context.SaveChanges();
+                }
+                else
+                {
+                    App.selectedRepairs.Date = TBoxDate.Text;
+                    App.selectedRepairs.ConductWork_Id = int.Parse(CBoxNameWork.SelectedValue.ToString());
+                    App.selectedRepairs.Car_Id = int.Parse(CBoxStateNumber.SelectedValue.ToString());
+                    App.Context.SaveChanges();
+                }
+                NavigationService.GoBack();
             }
-            NavigationService.GoBack();
         }
-
-       
-
+        
         private void TBoxDate_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox)
@@ -111,5 +130,7 @@ namespace WpfCar.View.EditPage
                 }
             }
         }
+
+        
     }
 }

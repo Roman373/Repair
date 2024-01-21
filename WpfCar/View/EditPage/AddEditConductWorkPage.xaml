@@ -4,39 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfCar.View.EditPage"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" MaxWidth="550"
       d:DesignHeight="150" d:DesignWidth="400"
       Title="AddEditConductWorkPage">
 
-    <Page.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Марка"/>
+        <TextBlock Text="Вид работ"/>
         <TextBlock Text="Тип двигателя" Grid.Row="1"/>
-        <TextBox Name="TBoxNameWork"  Text="{Binding NameWork}" Grid.Column="1"/>
+        <TextBox Name="TBoxNameWork" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding NameWork}" Grid.Column="1"/>
         <ComboBox Name="CBoxEngineType" DisplayMemberPath="Name" SelectedValuePath="Id"
                    SelectedItem="{Binding EngineTypes}"  Grid.Column="1" Grid.Row="1"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"

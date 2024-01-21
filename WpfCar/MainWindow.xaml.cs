@@ -56,6 +56,11 @@ namespace WpfCar
         {
             FrameMain.Navigate(new RepairPage());
         }
-        
+
+        private void ExitMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show($"Вы действительно хотите выйти? ", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                this.Close();
+        }
     }
 }

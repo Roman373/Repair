@@ -44,12 +44,24 @@ namespace WpfCar.View
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            App.selectedRepairs = (sender as Button).DataContext as Model.Repairs;
-            // если ни одного объекта не выделено, выходим
-            if (App.selectedRepairs is null) return;
-            App.Context.Repairs.Remove(App.selectedRepairs);
-            App.Context.SaveChanges();
-            UpdateRepair();
+            try
+            {
+                if (MessageBox.Show($"Вы уверены, что хотите удалить  ремонт автомобиля {App.selectedRepairs.Cars.Model}" +
+                $" гос. номер:{App.selectedRepairs.Cars.StateNumber} вид ремонта {App.selectedRepairs.ConductWorks.NameWork}"
+                    , "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    App.selectedRepairs = (sender as Button).DataContext as Model.Repairs;
+                    // если ни одного объекта не выделено, выходим
+                    if (App.selectedRepairs is null) return;
+                    App.Context.Repairs.Remove(App.selectedRepairs);
+                    App.Context.SaveChanges();
+                    UpdateRepair();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

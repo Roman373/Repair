@@ -4,6 +4,31 @@
              xmlns:local="clr-namespace:WpfCar"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="10"></Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

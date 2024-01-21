@@ -4,61 +4,38 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfCar.View.EditPage"
-      mc:Ignorable="d"
+      mc:Ignorable="d" Width="550"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddEditRepairPage">
 
-    <Page.Resources>
-        
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        
-        <Style TargetType="Button">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        
-        <Style TargetType="ComboBox">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-        <Style TargetType="DatePicker">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="Margin" Value="8"/>
-        </Style>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Дата "/>
+            <TextBlock Text="(dd.mm.yyyy)" />
+        </StackPanel>
         
-        <TextBlock Text="Дата (dd.mm.yyyy)" />
         <TextBlock Text="Автомобиль" Grid.Row="1"/>
         <TextBlock Text="Вид работы" Grid.Row="2"/>
         
         <TextBox Name="TBoxDate"  Grid.Column="1" TextChanged="TBoxDate_TextChanged" 
                  Text="{Binding Date, StringFormat = {}{0:dd.MM.yyyy}}"></TextBox>
-       
+
         <ComboBox Name="CBoxStateNumber" DisplayMemberPath="StateNumber" SelectedValuePath="Id"  
                  SelectedItem="{Binding Cars}" Grid.Row="1" Grid.Column="1" 
-                  SelectionChanged="CBoxEngineType_SelectionChanged"/>
-        
-        <ComboBox Name="CBoxEngineType" DisplayMemberPath="EngineTypes.Name" Visibility="Visible"  
-                   SelectedValuePath="EngineTypes.Id" 
-                   SelectedItem="{Binding Cars}" SelectionChanged="CBoxEngineType_SelectionChanged"/>
+                  
+                  SelectionChanged="CBoxStateNumber_SelectionChanged"/>
         
         <ComboBox Name="CBoxNameWork" DisplayMemberPath="NameWork" SelectedValuePath="Id"
                    SelectedItem="{Binding ConductWorks}" Grid.Column="1" Grid.Row="2"/>

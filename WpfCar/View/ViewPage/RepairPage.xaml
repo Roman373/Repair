@@ -17,25 +17,29 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
         <ListBox Name="RepairsList" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+                    <WrapPanel  HorizontalAlignment="Center" MaxWidth="550" VerticalAlignment="Center"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel >
                         <TextBlock Text="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" FontSize="16"/>
                         <TextBlock Text="{Binding Cars.Stamp}" FontSize="16"/>
                         
                         <TextBlock Text="{Binding Cars.Model}" FontSize="16"/>
                         <TextBlock Text="{Binding Cars.StateNumber}" FontSize="16"/>
-                        
-                        <TextBlock Text="{Binding ConductWorks.NameWork}" FontSize="16"/>
+                        <StackPanel Orientation="Vertical" MaxWidth="450" MaxHeight="150" >
+                            <TextBlock TextWrapping="Wrap" MinHeight="50" Text="{Binding ConductWorks.NameWork}" 
+                                       FontSize="16"/>
+
+                        </StackPanel>
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Content="Изменить" Margin="10" Padding="3" 

@@ -53,12 +53,38 @@ namespace WpfCar.View
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            App.selectedCars = (sender as Button).DataContext as Model.Cars;
-            // если ни одного объекта не выделено, выходим
-            if (App.selectedCars is null) return;
-            App.Context.Cars.Remove(App.selectedCars);
-            App.Context.SaveChanges();
-            UpdateCar();
+            try
+            {
+                App.selectedCars = (sender as Button).DataContext as Model.Cars;
+                int countOrder = 0;
+                if (MessageBox.Show($"Вы уверены, что хотите удалить автомобиль {App.selectedCars.Model} гос. номер {App.selectedCars.StateNumber}"
+                        , "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    foreach (Model.Repairs repair in App.Context.Repairs.Cast<Model.Repairs>())
+                    {
+                        if (repair.Car_Id == App.selectedCars.Id)
+                        {
+                            countOrder++;
+                            MessageBox.Show($"Удалить нельзя автомобиль {App.selectedCars.StateNumber} " +
+                                $"содержит заказ №{repair.Id}", "Внимание",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    if (countOrder == 0)
+                    {
+                        
+                        // если ни одного объекта не выделено, выходим
+                        if (App.selectedCars is null) return;
+                        App.Context.Cars.Remove(App.selectedCars);
+                        App.Context.SaveChanges();
+                        UpdateCar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         

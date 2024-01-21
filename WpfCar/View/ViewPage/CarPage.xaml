@@ -17,13 +17,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
         <ListBox Name="CarsList" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible"/>
+                    <WrapPanel HorizontalAlignment="Center" MaxWidth="550" VerticalAlignment="Center" 
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
